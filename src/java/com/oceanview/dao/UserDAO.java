@@ -253,4 +253,21 @@ public class UserDAO {
 
         return false;
     }
+    //new sample
+    public Integer getUserIdByEmail(String email) {
+    String sql = "SELECT id FROM users WHERE email=?";
+    try (java.sql.Connection con = com.oceanview.util.DBConnection.getConnection();
+         java.sql.PreparedStatement ps = con.prepareStatement(sql)) {
+
+        ps.setString(1, email);
+
+        try (java.sql.ResultSet rs = ps.executeQuery()) {
+            if (rs.next()) return rs.getInt("id");
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+    return null;
+}
+    
 }

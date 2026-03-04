@@ -183,6 +183,18 @@
             color: white;
             text-decoration: underline;
         }
+
+        .forgot-link{
+            color: rgba(255,255,255,0.9);
+            font-size: 0.9rem;
+            text-decoration: none;
+        }
+
+        .forgot-link:hover{
+            text-decoration: underline;
+            color:#ffffff;
+        }
+
     </style>
 </head>
 
@@ -194,7 +206,6 @@
             <hr>
         </div>
 
-        <!-- Success message from registration -->
         <%
             String successMessage = (String) session.getAttribute("successMessage");
             if (successMessage != null) {
@@ -207,7 +218,6 @@
             }
         %>
 
-        <!-- ✅ FIXED: use contextPath so servlet always works -->
         <form action="<%=request.getContextPath()%>/LoginServlet" method="post">
 
             <div class="mb-2">
@@ -226,11 +236,17 @@
                 </div>
             </div>
 
+            <!-- ✅ Added Forgot Password -->
+            <div class="text-end mb-2">
+                <a href="<%=request.getContextPath()%>/forgotPassword.jsp" class="forgot-link">
+                    Forgot Password?
+                </a>
+            </div>
+
             <button type="submit" class="btn btn-login">
                 <i class="fas fa-sign-in-alt me-2"></i>Login
             </button>
 
-            <!-- Error message display -->
             <%
                 Object err = request.getAttribute("error");
                 if (err != null) {

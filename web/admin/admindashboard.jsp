@@ -196,6 +196,7 @@
             overflow: hidden;
         }
         .dropdown-header{ color: rgba(255,255,255,0.85); }
+
         .noti-item{
             padding: 10px 14px;
             border-top: 1px solid rgba(255,255,255,0.06);
@@ -204,6 +205,23 @@
         .noti-item small{
             display:block;
             color: rgba(255,255,255,0.60);
+        }
+
+        /* ✅ NEW: notification scroll view */
+        .noti-scroll{
+            max-height: 320px;       /* change height if you want */
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        /* Optional scrollbar style */
+        .noti-scroll::-webkit-scrollbar{ width: 6px; }
+        .noti-scroll::-webkit-scrollbar-thumb{
+            background: rgba(255,255,255,0.25);
+            border-radius: 10px;
+        }
+        .noti-scroll::-webkit-scrollbar-thumb:hover{
+            background: rgba(255,255,255,0.40);
         }
 
         .welcome{
@@ -308,15 +326,14 @@
                 </div>
             </div>
 
-            <!-- ✅ IMPORTANT: use servlet -->
             <a class="nav-linkx <%= "dashboard".equals(active) ? "active" : "" %>"
                href="<%=request.getContextPath()%>/AdminDashboard">
                 <i class="fas fa-tachometer-alt"></i> Dashboard
             </a>
 
             <a class="nav-linkx" href="<%=request.getContextPath()%>/AdminManageUsers">
-   <i class="fas fa-users"></i> Manage Users
-</a>
+                <i class="fas fa-users"></i> Manage Users
+            </a>
 
             <a class="nav-linkx" href="<%=request.getContextPath()%>/AdminManageUsers">
                 <i class="fas fa-user-tie"></i> Manage Staff
@@ -365,42 +382,49 @@
                     </button>
 
                     <div class="dropdown-menu dropdown-menu-end dropdown-menu-darkish p-0">
+
+                        <!-- Header -->
                         <div class="p-3 d-flex justify-content-between align-items-center">
                             <div class="dropdown-header p-0"><b>Notifications</b></div>
-                            <!-- ✅ IMPORTANT: admin notifications page -->
-                            <a href="<%=request.getContextPath()%>/admin/notifications.jsp" class="text-decoration-none" style="color:#4ecdc4;">
+                            <a href="<%=request.getContextPath()%>/admin/notifications.jsp"
+                               class="text-decoration-none" style="color:#4ecdc4;">
                                 View All
                             </a>
                         </div>
 
-                        <%
-                            if (notifications == null || notifications.isEmpty()) {
-                        %>
-                            <div class="noti-item">
-                                No notifications
-                                <small>You're all caught up ✅</small>
-                            </div>
-                        <%
-                            } else {
-                                int maxShow = Math.min(5, notifications.size());
-                                for (int i = 0; i < maxShow; i++) {
-                                    Object n = notifications.get(i);
-                        %>
-                            <div class="noti-item">
-                                <i class="fas fa-circle-info me-2" style="color:#ffd166;"></i>
-                                <%= String.valueOf(n) %>
-                                <small></small>
-                            </div>
-                        <%
+                        <!-- ✅ Scrollable list -->
+                        <div class="noti-scroll">
+                            <%
+                                if (notifications == null || notifications.isEmpty()) {
+                            %>
+                                <div class="noti-item">
+                                    No notifications
+                                    <small>You're all caught up ✅</small>
+                                </div>
+                            <%
+                                } else {
+                                    int maxShow = Math.min(20, notifications.size()); // show more with scroll
+                                    for (int i = 0; i < maxShow; i++) {
+                                        Object n = notifications.get(i);
+                            %>
+                                <div class="noti-item">
+                                    <i class="fas fa-circle-info me-2" style="color:#ffd166;"></i>
+                                    <%= String.valueOf(n) %>
+                                    <small></small>
+                                </div>
+                            <%
+                                    }
                                 }
-                            }
-                        %>
+                            %>
+                        </div>
 
+                        <!-- Footer -->
                         <div class="p-2 text-center" style="border-top:1px solid rgba(255,255,255,0.08);">
                             <a class="btn btn-sm btn-blue w-100" href="<%=request.getContextPath()%>/admin/notifications.jsp">
                                 Open Notifications
                             </a>
                         </div>
+
                     </div>
                 </div>
             </div>
@@ -460,7 +484,7 @@
                         <div class="icon"><i class="fas fa-users"></i></div>
                         <h5 class="mb-2" style="font-weight:700;">Manage Users</h5>
                         <div class="muted mb-3">View / Edit / Delete users</div>
-                        <a class="btn btn-round btn-blue w-100"  href="<%=request.getContextPath()%>/AdminManageUsers">Open</a>
+                        <a class="btn btn-round btn-blue w-100" href="<%=request.getContextPath()%>/AdminManageUsers">Open</a>
                     </div>
                 </div>
 
