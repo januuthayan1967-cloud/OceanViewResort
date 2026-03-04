@@ -333,7 +333,7 @@
             <div class="action-card">
                 <i class="fas fa-headset"></i>
                 <h6>Support</h6>
-                <a href="<%=request.getContextPath()%>/user/help.jsp" class="btn btn-primary mt-2">Contact</a>
+                <a href="<%=request.getContextPath()%>/user/booking.jsp" class="btn btn-primary mt-2">Contact</a>
             </div>
         </div>
     </div>
