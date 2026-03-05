@@ -1,6 +1,7 @@
 package com.oceanview.controller;
 
 import com.oceanview.dao.NotificationDAO;
+import com.oceanview.dao.BookingDAO;
 import com.oceanview.model.User;
 
 import java.io.IOException;
@@ -25,13 +26,18 @@ public class UserDashboardServlet extends HttpServlet {
             return;
         }
 
-        NotificationDAO dao = new NotificationDAO();
-
-        int notiCount = dao.countUnreadForUser(user.getId());
-        List<String> notifications = dao.getLatestForUser(user.getId(), 5);
+        // ✅ Notifications
+        NotificationDAO notiDao = new NotificationDAO();
+        int notiCount = notiDao.countUnreadForUser(user.getId());
+        List<String> notifications = notiDao.getLatestForUser(user.getId(), 5);
 
         request.setAttribute("notiCount", notiCount);
         request.setAttribute("notifications", notifications);
+
+        // ✅ Booking Count (CONFIRMED bookings in reservation table)
+        BookingDAO bookingDAO = new BookingDAO();
+        int bookingCount = bookingDAO.countConfirmedBookings(user.getId());
+        request.setAttribute("bookingCount", bookingCount);
 
         request.getRequestDispatcher("/user/userdashbord.jsp").forward(request, response);
     }

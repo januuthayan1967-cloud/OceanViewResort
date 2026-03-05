@@ -21,7 +21,10 @@
 
     List<String> notifications = (List<String>) request.getAttribute("notifications");
 %>
-
+<%
+    Integer bookingCountObj = (Integer) request.getAttribute("bookingCount");
+    int bookingCount = (bookingCountObj == null) ? 0 : bookingCountObj;
+%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -287,8 +290,9 @@
         <div class="col-md-4">
             <div class="stat-card">
                 <i class="fas fa-calendar-check fa-2x text-primary"></i>
-                <h5 class="mt-2 mb-1">Reservations</h5>
+                <h5 class="mt-2 mb-1">Bookings</h5>
                 <p class="text-muted m-0">View your bookings</p>
+                <p class="text-muted m-0">Total bookings: <b><%= bookingCount %></b></p>
             </div>
         </div>
 
@@ -329,11 +333,12 @@
             </div>
         </div>
 
+        <!-- ✅ ONLY THIS CARD CHANGED -->
         <div class="col-md-4">
             <div class="action-card">
-                <i class="fas fa-headset"></i>
-                <h6>Support</h6>
-                <a href="<%=request.getContextPath()%>/user/booking.jsp" class="btn btn-primary mt-2">Contact</a>
+                <i class="fas fa-bed"></i>
+                <h6>Book Room</h6>
+                <a href="<%=request.getContextPath()%>/user/booking.jsp" class="btn btn-primary mt-2">Book Now</a>
             </div>
         </div>
     </div>
