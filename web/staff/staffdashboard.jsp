@@ -325,8 +325,8 @@
             <i class="fas fa-bell"></i> Notifications
         </a>
 
-        <a href="<%=request.getContextPath()%>/staff/reports.jsp" class="nav-link-custom">
-            <i class="fas fa-chart-line"></i> Reports
+        <a href="<%=request.getContextPath()%>/staff/help.jsp" class="nav-link-custom">
+            <i class="fas fa-bell-concierge"></i> Help
         </a>
 
         <a href="<%=request.getContextPath()%>/LogoutServlet" class="nav-link-custom">
