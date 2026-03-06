@@ -10,13 +10,16 @@
     <div class="card p-4 shadow">
         <h4 class="text-primary mb-3">Forgot Password</h4>
 
-        <% String error = (String) request.getAttribute("error"); %>
-        <% String msg = (String) request.getAttribute("msg"); %>
-        <% String resetLink = (String) request.getAttribute("resetLink"); %>
+        <%
+            String error = (String) request.getAttribute("error");
+            String msg = (String) session.getAttribute("successMessage");
+            String resetLink = (String) session.getAttribute("resetLink");
+        %>
 
         <% if (error != null) { %>
             <div class="alert alert-danger"><%= error %></div>
         <% } %>
+
         <% if (msg != null) { %>
             <div class="alert alert-success"><%= msg %></div>
         <% } %>
@@ -24,10 +27,9 @@
         <form action="<%=request.getContextPath()%>/ForgotPasswordServlet" method="post">
             <label class="form-label">Enter your email</label>
             <input type="email" name="email" class="form-control" required>
-            <button class="btn btn-primary w-100 mt-3">Generate Reset Link</button>
+            <button type="submit" class="btn btn-primary w-100 mt-3">Generate Reset Link</button>
         </form>
 
-        <%-- ✅ Show reset link (NO Gmail) --%>
         <% if (resetLink != null) { %>
             <div class="mt-3">
                 <a class="btn btn-success w-100" href="<%= resetLink %>">
@@ -43,8 +45,15 @@
             </div>
         <% } %>
 
-        <a class="btn btn-link w-100 mt-3" href="<%=request.getContextPath()%>/login.jsp">Back to Login</a>
+        <a class="btn btn-link w-100 mt-3" href="<%=request.getContextPath()%>/login.jsp">
+            Back to Login
+        </a>
     </div>
 </div>
 </body>
 </html>
+
+<%
+    session.removeAttribute("successMessage");
+    session.removeAttribute("resetLink");
+%>
